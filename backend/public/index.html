@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+</head>
+<body class="p-8 bg-gray-100">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="mb-6 text-3xl font-bold">Search for a Movie</h1>
+        <div class="flex gap-2 mb-6">
+            <input type="text" id="movie-name" placeholder="Enter movie name" 
+                   class="flex-1 p-2 border rounded shadow-sm"/>
+            <button id="search-button" 
+                    class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
+                Search
+            </button>
+        </div>
+        <div id="movie-info" class="p-6 bg-white rounded shadow-lg"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api/movie';
+        
+        async function searchMovie() {
+            const movieName = document.getElementById('movie-name').value.trim();
+            const movieInfo = document.getElementById('movie-info');
+            
+            if (!movieName) {
+                movieInfo.innerHTML = '<p class="text-red-500">Please enter a movie name.</p>';
+                return;
+            }
+
+            try {
+                movieInfo.innerHTML = '<p class="text-gray-500">Searching...</p>';
+                const response = await fetch(`${API_URL}?name=${encodeURIComponent(movieName)}`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const data = await response.json();
+                const movie = data.results[0];
+
+                if (movie) {
+                    const posterUrl = movie.poster_path 
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : '/api/placeholder/200/300';
+
+                    movieInfo.innerHTML = `
+                        <div class="flex gap-6">
+                            <img src="${posterUrl}" alt="${movie.title}" 
+                                 class="w-48 rounded shadow-lg"/>
+                            <div>
+                                <h2 class="mb-3 text-2xl font-bold">
+                                    ${movie.title} (${movie.release_date.split('-')[0]})
+                                </h2>
+                                <p class="mb-2"><strong>Rating:</strong> ⭐ ${movie.vote_average}/10</p>
+                                <p class="mb-2"><strong>Release Date:</strong> ${movie.release_date}</p>
+                                <p><strong>Overview:</strong> ${movie.overview}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    movieInfo.innerHTML = '<p class="text-red-500">No movie found.</p>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                movieInfo.innerHTML = '<p class="text-red-500">Error fetching movie data.</p>';
+            }
+        }
+
+        document.getElementById('search-button').addEventListener('click', searchMovie);
+        document.getElementById('movie-name').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchMovie();
+        });
+    </script>
+</body>
+</html>

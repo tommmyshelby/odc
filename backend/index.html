@@ -1,0 +1,59 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #movie-info {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search for a Movie</h1>
+  <input type="text" id="movie-name" placeholder="Enter movie name" />
+  <button id="search-button">Search</button>
+
+  <div id="movie-info"></div>
+
+  <script>
+    document.getElementById('search-button').addEventListener('click', async () => {
+      const movieName = document.getElementById('movie-name').value.trim();
+      if (!movieName) {
+        alert('Please enter a movie name.');
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/movie?name=${encodeURIComponent(movieName)}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        const movie = data.results[0];
+
+        if (movie) {
+          const movieInfo = `
+            <h2>${movie.title} (${movie.release_date.split('-')[0]})</h2>
+            <p><strong>Overview:</strong> ${movie.overview}</p>
+            <p><strong>Rating:</strong> ${movie.vote_average}</p>
+            <p><strong>Release Date:</strong> ${movie.release_date}</p>
+          `;
+          document.getElementById('movie-info').innerHTML = movieInfo;
+        } else {
+          document.getElementById('movie-info').innerHTML = '<p>No movie found.</p>';
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        document.getElementById('movie-info').innerHTML = '<p>Error fetching data.</p>';
+      }
+    });
+  </script>
+</body>
+</html>
