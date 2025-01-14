@@ -12,18 +12,19 @@ const MovieDescription = () => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
   const [hasVoted, setHasVoted] = React.useState(false);
+  const server = import.meta.env.VITE_SERVER_URL;
 
   React.useEffect(() => {
     const fetchMovie = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/movies/${id}`);
+        const response = await axios.get(`${server}/movies/${id}`);
         setMovie(response.data);
         
         // If user is authenticated, check if they've voted
         if (isAuthenticated && token) {
           try {
             const voteCheckResponse = await axios.get(
-              `http://localhost:5000/movies/${id}/check-vote`,
+              `${server}/movies/${id}/check-vote`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -55,7 +56,7 @@ const MovieDescription = () => {
 
     try {
       await axios.post(
-        `http://localhost:5000/movies/${id}/vote`,
+        `${server}/movies/${id}/vote`,
         {},
         {
           headers: {

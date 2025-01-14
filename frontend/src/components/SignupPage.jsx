@@ -16,7 +16,7 @@ const SignupPage = () => {
         e.preventDefault();
         // Handle login logic here
         try{
-          const response = await axios.post('http://localhost:5000/auth/register',formData);
+          const response = await axios.post(`${server}/auth/register`,formData);
   
           if (response.data.token){
               

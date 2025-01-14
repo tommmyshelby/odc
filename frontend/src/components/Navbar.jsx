@@ -16,33 +16,22 @@ const Navbar = () => {
         <div className="flex space-x-5 font-medium">
           <Link to="/" className="font-medium hover:text-gray-400">Home</Link>
 
-
-
           {isAuthenticated ? (
             <>
-
-              <Link to="/top-movies" className="hover:text-gray-400">TopList </Link>
-              
+              <Link to="/top-movies" className="hover:text-gray-400">TopList</Link>
               <Link to="/search-movies" className="hover:text-gray-400">Search Movies</Link>
-              
-              
               <Link to="/my-profile" className="hover:text-gray-400">My Profile</Link>
               <button onClick={logout} className="hover:text-gray-400">Logout</button>
             </>
           ) : (
-            // Show Login and Signup buttons if user is not authenticated
             <>
               <Link to="/login" className="hover:text-gray-400">Login</Link>
               <Link to="/signup" className="hover:text-gray-400">Signup</Link>
             </>
           )}
-
-
-
         </div>
       </div>
     </nav>
-
   )
 }
 

@@ -13,7 +13,8 @@ const SearchPage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const server = import.meta.env.VITE_SERVER_URL;
+  
   useEffect(() => {
     if (!isAuthenticated) navigate("/login");
   }, [isAuthenticated, navigate]);
@@ -28,7 +29,7 @@ const SearchPage = () => {
       const token = localStorage.getItem("Authorization");
 
       const { data } = await axios.post(
-        "http://localhost:5000/movies/search",
+        `${server}/movies/search`,
         { title, year },
         {
           headers: {

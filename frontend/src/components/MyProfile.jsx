@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 import { toast } from 'sonner';
 import { User, History, Lock } from 'lucide-react';
 import { useAuth } from '../AuthContext';
+
 
 const MyProfile = () => {
   const { token } = useAuth();
@@ -15,15 +17,16 @@ const MyProfile = () => {
     newPassword: '',
     confirmPassword: ''
   });
+  const server = import.meta.env.VITE_SERVER_URL;
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const [profileResponse, historyResponse] = await Promise.all([
-          axios.get('http://localhost:5000/profile', {
+          axios.get(`${server}/profile`, {
             headers: { Authorization: token }
           }),
-          axios.get('http://localhost:5000/profile/history', {
+          axios.get(`${server}/profile/history`, {
             headers: { Authorization: token }
           })
         ]);
@@ -51,7 +54,7 @@ const MyProfile = () => {
 
     try {
       await axios.put(
-        'http://localhost:5000/profile/change-password',
+        `${server}/profile/change-password`,
         {
           oldPassword: passwordData.oldPassword,
           newPassword: passwordData.newPassword

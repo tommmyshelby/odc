@@ -6,11 +6,12 @@ const TopMovies = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const server = import.meta.env.VITE_SERVER_URL;
 
   useEffect(() => {
     const fetchTopMovies = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/movies/top-movies');
+        const response = await axios.get(`${server}/movies/top-movies`);
         setMovies(Array.isArray(response.data) ? response.data : []);
       } catch (err) {
         console.error('Error fetching top movies:', err);

@@ -1,26 +1,32 @@
-// Replace 'YOUR_API_KEY' with your actual TMDb API key
-const apiKey = '07df902d51b0891a03e92a81051e355e';
-const movieName = 'Inception'; // Replace with the desired movie name
-const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(movieName)}&language=en-US&page=1`;
+// server.js
+import express from 'express';
+import fetch from 'node-fetch';
 
-fetch(apiUrl)
-  .then(response => {
+const app = express();
+const port = 3000;
+
+// Serve static files (e.g., HTML, CSS, JS)
+app.use(express.static('public'));
+
+// Endpoint to fetch movie data
+app.get('/api/movie', async (req, res) => {
+  const movieName = req.query.name;
+  const apiKey = 'YOUR_API_KEY'; // Replace with your actual TMDb API key
+  const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(movieName)}&language=en-US&page=1`;
+
+  try {
+    const response = await fetch(apiUrl);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return response.json();
-  })
-  .then(data => {
-    if (data.results.length > 0) {
-      const movie = data.results[0];
-      console.log(`Title: ${movie.title}`);
-      console.log(`Overview: ${movie.overview}`);
-      console.log(`Release Date: ${movie.release_date}`);
-      console.log(`Rating: ${movie.vote_average}`);
-    } else {
-      console.log('No movies found.');
-    }
-  })
-  .catch(error => {
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
     console.error('Error fetching data:', error);
-  });
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server listening at http://localhost:${port}`);
+});

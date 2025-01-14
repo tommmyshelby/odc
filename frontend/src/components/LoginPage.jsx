@@ -7,7 +7,7 @@ import { toast } from "sonner";
 const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
-
+  const server = import.meta.env.VITE_SERVER_URL;
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -19,7 +19,7 @@ const LoginPage = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/auth/login', formData);
+      const response = await axios.post(`${server}/auth/login`, formData);
 
       if (response.data.token) {
         login(response.data.token, response.data.userId);
