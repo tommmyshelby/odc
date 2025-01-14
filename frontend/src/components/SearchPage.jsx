@@ -60,7 +60,7 @@ const SearchPage = () => {
         <input
           type="text"
           className="w-full px-4 py-2 mb-4 text-black rounded-lg shadow-md"
-          placeholder="Enter movie title"
+          placeholder="Enter movie title (Use exact names)"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
