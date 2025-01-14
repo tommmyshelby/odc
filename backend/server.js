@@ -15,7 +15,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: 'https://odc-one.vercel.app', // Replace with your frontend's URL
+  origin: ['https://odc-one.vercel.app',"http://localhost:5173"], // Replace with your frontend's URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };

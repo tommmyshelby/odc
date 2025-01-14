@@ -18,31 +18,35 @@ const MyProfile = () => {
     confirmPassword: ''
   });
   const server = import.meta.env.VITE_SERVER_URL;
-
+ 
+ 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const [profileResponse, historyResponse] = await Promise.all([
-          axios.get(`${server}/profile`, {
-            headers: { Authorization: token }
-          }),
-          axios.get(`${server}/profile/history`, {
-            headers: { Authorization: token }
-          })
-        ]);
+    // Only fetch if token exists
+    if (token) {
+      const fetchUserData = async () => {
+        try {
+          const [profileResponse, historyResponse] = await Promise.all([
+            axios.get(`${server}/profile`, {
+              headers: { Authorization: `Bearer ${token}` }  // Add Bearer prefix
+            }),
+            axios.get(`${server}/profile/history`, {
+              headers: { Authorization: `Bearer ${token}` }  // Add Bearer prefix
+            })
+          ]);
 
-        setUser(profileResponse.data);
-        setVotingHistory(historyResponse.data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        toast.error('Failed to load profile data');
-      } finally {
-        setLoading(false);
-      }
-    };
+          setUser(profileResponse.data);
+          setVotingHistory(historyResponse.data);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          toast.error('Failed to load profile data');
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    fetchUserData();
-  }, [token]);
+      fetchUserData();
+    }
+  }, [token, server]);
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
@@ -60,7 +64,7 @@ const MyProfile = () => {
           newPassword: passwordData.newPassword
         },
         {
-          headers: { Authorization: token }
+          headers: { Authorization: `Bearer ${token}` }
         }
       );
 
@@ -100,12 +104,7 @@ const MyProfile = () => {
                 <label className="block mb-1 text-gray-400">Email</label>
                 <p className="text-white">{user?.email}</p>
               </div>
-              <div>
-                <label className="block mb-1 text-gray-400">Member Since</label>
-                <p className="text-white">
-                  {new Date(user?.createdAt).toLocaleDateString()}
-                </p>
-              </div>
+              
             </div>
           </div>
 

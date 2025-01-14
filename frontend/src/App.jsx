@@ -1,14 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; 
 import HomePage from "./components/HomePage";
 import Navbar from "./components/Navbar";
-
 import MyProfile from "./components/MyProfile";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import { AuthProvider } from "./AuthContext";
-import { Toaster } from "sonner"; // Correct import for sonner
+import { Toaster } from "sonner"; 
 import MovieDescription from "./components/MovieDescription";
-
 import TopMovies from "./components/TopMovies";
 import SearchPage from "./components/SearchPage";
 import Footer from "./components/Footer";
@@ -21,35 +19,34 @@ function App() {
           position="bottom-right"
           toastOptions={{
             style: {
-              background: '#18202D',  // Dark background for the toast
-              color: '#fff',  // White text
-              padding: '16px',  // Add some padding for a more spacious look
-              borderRadius: '8px',  // Rounded corners for the toast box
-              fontSize: '16px',  // Adjust font size
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',  // Add subtle shadow to elevate the toast
+              background: '#18202D', 
+              color: '#fff',
+              padding: '16px',
+              borderRadius: '8px',
+              fontSize: '16px',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
             },
             success: {
               duration: 3000,
               icon: '🎉',
               style: {
-                background: '#28a745',  // Green background for success
-                borderRadius: '8px',  // Keep rounded corners consistent
-                color: '#fff',  // White text for success
-                padding: '12px 20px',  // Padding for success toast
+                background: '#28a745',
+                borderRadius: '8px',
+                color: '#fff',
+                padding: '12px 20px',
               },
             },
             error: {
               duration: 4000,
               icon: '❌',
               style: {
-                background: '#dc3545',  // Red background for error
-                borderRadius: '8px',  // Rounded corners for error
-                color: '#fff',  // White text for error
-                padding: '12px 20px',  // Padding for error toast
+                background: '#dc3545',
+                borderRadius: '8px',
+                color: '#fff',
+                padding: '12px 20px',
               },
             },
           }}
-          
         />
         <Navbar />
         <div>
@@ -58,14 +55,12 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/search-movies" element={<SearchPage />} />
-            
             <Route path="/my-profile" element={<MyProfile />} />
-            <Route path="/movies/:id" element={<MovieDescription/>}/>
-            <Route path="/top-movies" element={<TopMovies/>}/>
-            
+            <Route path="/movies/:id" element={<MovieDescription />} />
+            <Route path="/top-movies" element={<TopMovies />} />
           </Routes>
         </div>
-        <Footer/>
+        <Footer />
       </Router>
     </AuthProvider>
   );

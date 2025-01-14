@@ -28,21 +28,13 @@ const Footer = () => {
                   Home
                 </Link>
               </li>
-              <li>
-                <Link to="/movies" className="transition-colors hover:text-yellow-200">
-                  Movies
-                </Link>
-              </li>
+              
               <li>
                 <Link to="/top-movies" className="transition-colors hover:text-yellow-200">
                   Top Movies
                 </Link>
               </li>
-              <li>
-                <Link to="/about" className="transition-colors hover:text-yellow-200">
-                  About Us
-                </Link>
-              </li>
+              
             </ul>
           </div>
 
@@ -72,13 +64,13 @@ const Footer = () => {
             © {currentYear} On-Demand Cinema. All rights reserved.
           </div>
           <div className="flex space-x-6">
-            <Link to="/privacy" className="transition-colors hover:text-yellow-200">
+            <Link to="" className="transition-colors hover:text-yellow-200">
               Privacy Policy
             </Link>
-            <Link to="/terms" className="transition-colors hover:text-yellow-200">
+            <Link to="" className="transition-colors hover:text-yellow-200">
               Terms of Service
             </Link>
-            <Link to="/cookies" className="transition-colors hover:text-yellow-200">
+            <Link to="" className="transition-colors hover:text-yellow-200">
               Cookie Policy
             </Link>
           </div>

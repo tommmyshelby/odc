@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 const AuthContext = createContext();
@@ -15,6 +16,7 @@ const AuthProvider = ({ children }) => {
       if (savedToken) {
         setIsAuthenticated(true);
         setToken(savedToken);
+        console.log("token is :"+token);
       }
       setIsLoading(false); // Mark initialization as complete
     };
@@ -33,6 +35,7 @@ const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     setToken(null);
     toast.success('Successfully logged Out!');
+    Navigate("/")
   };
 
   // If still loading, you can return a loading indicator or null
