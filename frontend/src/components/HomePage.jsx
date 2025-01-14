@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import MovieSlider from './MovieSlider';
-import TopMovies from './TopMovies';
+
 import axios from 'axios';
 
 const HomePage = () => {
