@@ -33,7 +33,7 @@ const MovieSlider = ({ movies = [] }) => {
                 className="py-8"
             >
                 {movies.map((movie) => (
-                    <SwiperSlide key={movie._id || movie.id} className="flex items-center justify-center">
+                    <SwiperSlide key={movie._id } className="flex items-center justify-center">
                         <div className="transition-transform duration-300 transform scale-90 hover:scale-100">
                             <MovieCard movie={movie} />
                         </div>

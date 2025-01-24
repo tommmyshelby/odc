@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { toast } from 'sonner';
@@ -8,13 +8,13 @@ const MovieDescription = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated, token } = useAuth();
-  const [movie, setMovie] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState(null);
-  const [hasVoted, setHasVoted] = React.useState(false);
+  const [movie, setMovie] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [hasVoted, setHasVoted] = useState(false);
   const server = import.meta.env.VITE_SERVER_URL;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchMovie = async () => {
       try {
         const response = await axios.get(`${server}/movies/${id}`);
